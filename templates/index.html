@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+        <div>
+            {%block content%}
+            <h1 id="header">Home Page</h1>
+            <input type="text" id="inp"/>
+            <p>Hello, {{ name }}</p>
+            <button onclick="red()">Red</button>
+            <button onclick="green()">Green</button>
+            {% endblock %}
+        </div>
+
+        <div>
+            <h2 id="div2">Div2</h2>
+            <p id="dv2">
+                What color do you like??
+            </p>
+            <input type="text" id="inp2"/>
+            <button onclick="press()" id="butten2">
+                Press
+            </button>
+        </div>
+
+        <div>
+            <h1>
+                Div3
+            </h1>
+            <p>write smthing...</p>
+            <input type="text" id="inp3"/>
+            <button onclick="printOutput()">
+                Print
+            </button>
+            <p id="p3"></p>
+        </div>
+
+            <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='index.js')}}"
+            ></script>
+</body>
+</html>
