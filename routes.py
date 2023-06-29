@@ -12,6 +12,6 @@ routes = Blueprint(__name__, "routes")
 @routes.route("/")
 def home():
 
-    img_list = os.listdir("dataset/pics")
+    img_list = os.listdir("static/dataset/pics")
     random_img_name = img_list[np.random.randint(0, len(img_list))]
     return render_template("index.html", img_name=random_img_name)

@@ -6,7 +6,17 @@
 </head>
 <body>
         <div>
-            <img src="/static/dataset/pics/{{ img_name }}" alt="" height="200px">
+            <img draggable="false" src="/static/dataset/pics/{{ img_name }}" alt="" width="400px">
+            <br>
+            <button id="myButton">Click Me</button>
         </div>
+
+        <script>
+            const button = document.getElementById('myButton');
+
+            button.addEventListener('click', function() {
+              window.location.href = '/';
+            });
+        </script>
 </body>
 </html>
