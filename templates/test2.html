@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- Our CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+
+    <style>
+
+    #div1 {
+        position: absolute;
+        pointer-events: none;
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 2px dashed #fff;
+    }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    /* Change the link color to #111 (black) on hover */
+    li a:hover {
+      background-color: #111;
+    }
+
+    #formList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #selectionForm {
+      overflow-y: auto;
+    }
+    </style>
+</head>
+<body>
+
+
+
+<button id="showFormButton">Show Form</button>
+<div id="formContainer" style="display: none;">
+  <h5>Choose one class</h5>
+  <select id="selectionForm" size="28">
+    <optgroup label="Decay rate">
+      <option value="Class 1">0-Intact tooth</option>
+      <option value="Class 2">1-Fissure staining</option>
+      <option value="Class 3">2-Fissure caries</option>
+      <option value="Class 4">3-Mesial caries</option>
+      <option value="Class 5">4-Distal caries</option>
+      <option value="Class 6">5-Deep caries</option>
+    </optgroup>
+    <optgroup label="Tooth type/pos">
+      <option value="Class 7">1-Upper molar</option>
+      <option value="Class 8">2-Upper premolar</option>
+      <option value="Class 9">3-Upper incisor</option>
+      <option value="Class 10">4-Upper canine</option>
+      <option value="Class 11">5-Lower molar</option>
+      <option value="Class 12">6-Lower premolar</option>
+      <option value="Class 13">7-Lower incisor</option>
+      <option value="Class 14">8-Lower canine</option>
+    </optgroup>
+    </optgroup>
+    <optgroup label="Tooth Surface">
+      <option value="Class 15">1-Buccal</option>
+      <option value="Class 16">2-Lingual</option>
+      <option value="Class 17">3-Mesial</option>
+      <option value="Class 18">4-Distal</option>
+      <option value="Class 19">5-Occlusal</option>
+    </optgroup>
+    </optgroup>
+    <optgroup label="Classes of cavity">
+      <option value="Class 20">Class 1</option>
+      <option value="Class 21">Class 2</option>
+      <option value="Class 22">Class 3</option>
+      <option value="Class 23">Class 4</option>
+      <option value="Class 24">Class 5</option>
+    </optgroup>
+    <!-- Add more option groups as needed -->
+  </select>
+  <button id="submitButton">Submit</button>
+</div>
+
+
+
+
+
+</body>
+
+<script>
+
+// Get references to the necessary elements
+var showFormButton = document.getElementById("showFormButton");
+var formContainer = document.getElementById("formContainer");
+var submitButton = document.getElementById("submitButton");
+
+// Event listener for the show form button click event
+showFormButton.addEventListener("click", function() {
+  formContainer.style.display = "block";
+});
+
+// Event listener for the submit button click event
+submitButton.addEventListener("click", function() {
+  // Handle form submission logic here
+  // For demonstration purposes, we simply log the selected value to the console
+  var selectedValue = document.querySelector('#selectionForm').value;
+  console.log("Selected value:", selectedValue);
+});
+
+</script>
+
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+        <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- Our CSS -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <style>
+
+      #dragOverlay {
+          position: absolute;
+          pointer-events: none;
+          background-color: rgba(0, 0, 0, 0.5);
+          border: 2px dashed #fff;
+      }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li {
+      float: left;
+    }
+
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    /* Change the link color to #111 (black) on hover */
+    li a:hover {
+      background-color: #111;
+    }
+
+    </style>
+</head>
+
+
+
+<body>
+
+        <nav >
+
+            <ul>
+              <li><a href="{{ url_for('logout') }}">Logout</a></li>
+              <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+              <li><a href="/test">Test</a></li>
+            </ul>
+
+        </nav>
+
+        <div id="div1" style="position: absolute; width: 600px; height: 600px; top: 52px">
+
+                <div id="dragOverlay"></div>
+                <div id="myDiv" style=" top: 60px; left: 0px">
+                    <img id="pic" draggable="false" src="/static/dataset2/images/{{ img_name }}" alt="" width="600px">
+                </div>
+
+        </div>
+
+        <br>
+        <button id="myButton">Next</button>
+        <br>
+        <p id="lable_log1" style="position: absolute; top: 650px; display: none"></p>
+        <p id="lable_log2" style="position:absolute; top: 680px; display: none"></p>
+
+
+        <div id="formContainer" style="position: absolute; left: 601px; top: 52px">
+
+          <select id="selectionForm" size="25">
+            <optgroup label="Decay rate">
+              <option value="Class 1">0-Intact tooth</option>
+              <option value="Class 2">1-Fissure staining</option>
+              <option value="Class 3">2-Fissure caries</option>
+              <option value="Class 4">3-Mesial caries</option>
+              <option value="Class 5">4-Distal caries</option>
+              <option value="Class 6">5-Deep caries</option>
+            </optgroup>
+            <optgroup label="Tooth type/pos">
+              <option value="Class 7">1-Upper molar</option>
+              <option value="Class 8">2-Upper premolar</option>
+              <option value="Class 9">3-Upper incisor</option>
+              <option value="Class 10">4-Upper canine</option>
+              <option value="Class 11">5-Lower molar</option>
+              <option value="Class 12">6-Lower premolar</option>
+              <option value="Class 13">7-Lower incisor</option>
+              <option value="Class 14">8-Lower canine</option>
+            </optgroup>
+            </optgroup>
+            <optgroup label="Tooth Surface">
+              <option value="Class 15">1-Buccal</option>
+              <option value="Class 16">2-Lingual</option>
+              <option value="Class 17">3-Mesial</option>
+              <option value="Class 18">4-Distal</option>
+              <option value="Class 19">5-Occlusal</option>
+            </optgroup>
+            </optgroup>
+            <optgroup label="Classes of cavity">
+              <option value="Class 20">Class 1</option>
+              <option value="Class 21">Class 2</option>
+              <option value="Class 22">Class 3</option>
+              <option value="Class 23">Class 4</option>
+              <option value="Class 24">Class 5</option>
+            </optgroup>
+            <!-- Add more option groups as needed -->
+          </select>
+            <br>
+          <button id="submitButton">Submit</button>
+        </div>
+
+</body>
+
+        <script>
+            var lable_info = [];
+            var lable_pos = [];
+            const button = document.getElementById('myButton');
+
+            button.addEventListener('click', function() {
+              window.location.href = '/dashboard';
+            });
+
+            const img = document.querySelector("#pic");
+            const div = document.querySelector("#myDiv");
+            const div1 = document.querySelector("#div1");
+            const dragOverlay = document.querySelector("#dragOverlay");
+            const lable_log1 = document.getElementById("lable_log1");
+            const lable_log2 = document.getElementById("lable_log2");
+
+            div.style.backgroundColor = "grey";
+            div.style.width = img.width +'px' ;
+            div.style.height = img.height + "px";
+            {#div1.style.height = img.height + "px";#}
+
+
+            let startX, startY, endX, endY;
+
+            div.addEventListener('mousedown', handleMouseDown);
+            div.addEventListener('mouseup', handleMouseUp);
+
+            var formContainer = document.getElementById("formContainer");
+            var submitButton = document.getElementById("submitButton");
+
+            submitButton.addEventListener("click", function() {
+              var selectedValue = document.querySelector('#selectionForm').value;
+              dragOverlay.style.display = 'None';
+              temp.push(lable_log1.innerHTML)
+              console.log("Selected value:", selectedValue);
+              {#console.log(lable_log1.innerHTML)#}
+              {#console.log(lable_log2.innerHTML)#}
+              {#console.log(temp.slice(-1));#}
+              console.log(lable_pos);
+
+            });
+
+
+            function handleMouseDown(event) {
+                startX = event.clientX;
+                startY = event.clientY -52;
+
+                // Set the initial position and dimensions of the overlay
+                dragOverlay.style.left = startX + 'px';
+                dragOverlay.style.top = startY + 'px';
+                dragOverlay.style.width = '0';
+                dragOverlay.style.height = '0';
+
+                // Show the overlay
+                dragOverlay.style.display = 'block';
+
+                // Add event listener for mouse move
+                div.addEventListener('mousemove', handleMouseMove);
+            }
+
+            // Handle mouse move event
+            function handleMouseMove(event) {
+
+                // Update the ending coordinates
+                endX = event.clientX;
+                endY = event.clientY - 52;
+
+
+                // Calculate the dimensions of the dragged portion
+                const width = Math.abs(endX - startX);
+                const height = Math.abs(endY - startY);
+
+                // Update the position and dimensions of the overlay
+
+                dragOverlay.style.width = width + 'px';
+                dragOverlay.style.height = height + 'px';
+                dragOverlay.style.left = Math.min(startX, endX) + 'px';
+                dragOverlay.style.top = Math.min(startY, endY) + 'px';
+
+
+            }
+
+            // Handle mouse up event
+            function handleMouseUp() {
+              // Hide the overlay
+                const width = Math.abs(endX - startX);
+                const height = Math.abs(endY - startY);
+
+                if (width<30 && height<30) {
+                dragOverlay.style.display = 'none';
+                div.removeEventListener('mousemove', handleMouseMove);
+                }
+
+
+              // Print the location of the dragged portion
+              {#console.log('Start: (' + startX + ', ' + startY + ')');#}
+              {#console.log('End: (' + endX + ', ' + endY + ')');#}
+              lable_log1.innerHTML = 'Start: (' + startX + ', ' + startY + ')';
+              lable_log2.innerHTML = 'End: (' + endX + ', ' + endY + ')';
+              lable_pos = [startX, startY, endX, endY];
+              // Remove the mousemove event listener
+              div.removeEventListener('mousemove', handleMouseMove);
+            }
+
+        </script>
+
+</html>
