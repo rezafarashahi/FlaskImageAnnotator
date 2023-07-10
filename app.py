@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, Blueprint, url_for, request, redirect
+from flask import Flask, render_template, flash, Blueprint, url_for, request, redirect, jsonify, make_response
 from routes import routes
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -75,6 +75,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Log In")
 
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -95,6 +96,18 @@ def logout():
     logout_user()
     flash("You have been logged out")
     return redirect(url_for('login'))
+
+@app.route('/get_labled_data', methods=["POST"])
+@login_required
+def create_entry():
+
+    req = request.get_json()
+    print(req)
+
+    res = make_response(jsonify({"message": "JSON received"}), 200)
+
+    return res
+
 
 @app.route('/')
 def home():

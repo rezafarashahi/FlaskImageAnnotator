@@ -117,9 +117,12 @@
             <!-- Add more option groups as needed -->
           </select><br>
           <button id="submitButton" style="font-size: 16px">Apply Lable</button>
-          <button id="resetButton" style="font-size: 16px">Reset</button>
+          <button id="resetButton" style="font-size: 16px; width: 65px">Reset</button>
 
         </div>
+
+        <button id="submitAll" style="font-size: 16px; width: 165px; position: absolute;
+           top: 650px; left: 0px">Submit</button>
 
 
 
@@ -150,6 +153,7 @@
             const labled_div = document.getElementById("lableDiv");
 
 
+
             div.style.backgroundColor = "grey";
             div.style.width = img.width +'px' ;
             div.style.height = img.height + "px";
@@ -164,13 +168,17 @@
             var formContainer = document.getElementById("formContainer");
             var submitButton = document.getElementById("submitButton");
             var reset_button = document.getElementById("resetButton");
+            var submit_all_button = document.getElementById("submitAll");
 
             submitButton.addEventListener("click", function() {
               var selectedValue = document.querySelector('#selectionForm').value;
               dragOverlay.style.display = 'None';
               console.log("Selected value:", selectedValue);
               var tp = [lable_pos, parseInt(selectedValue)];
-              lable_info.push(tp);
+              if (tp[1]){
+                  lable_info.push(tp);
+              };
+
               if (lable_info.length > 1){
 
                   var info_0 = lable_info.slice(-1);
@@ -182,9 +190,8 @@
 
               }
 
-              console.log(lable_info);
-              console.log(labled_div.getBoundingClientRect().left);
 
+              console.log(JSON.stringify(lable_info));
               for (var i = 0; i<lable_info.length; i++){
                   x_s = lable_info[i][0][0];
                   y_s = lable_info[i][0][1];
@@ -210,6 +217,34 @@
                 divs.forEach(function (div){
                     div.parentNode.removeChild(div);
                 })
+            });
+
+            submit_all_button.addEventListener("click", function (){
+                var data = {
+                    "lable_data": lable_info,
+                    "img_name": "{{ img_name }}"
+                };
+
+                fetch(`${window.origin}/get_labled_data`, {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify(data),
+                    cache: "no-cache",
+                    headers: new Headers({
+                        "content-type": "application/json"
+                    })
+                })
+
+                .then(function (response){
+                    if (response.status !== 200) {
+                        console.log(`Response status was not 200: ${response.status}`);
+                        return ;
+                    }
+                    response.json().then(function (data){
+                        console.log(data);
+                    });
+                });
+
             });
 
 
@@ -293,9 +328,9 @@
 
 
               lable_pos = [Math.min(startX, endX),
-                           Math.min(startY, endY) ,
-                           Math.max(endX, startX) ,
-                           Math.max(endY, startY) ];
+                           Math.min(startY, endY),
+                           Math.max(endX, startX),
+                           Math.max(endY, startY)];
               // Remove the mousemove event listener
               div.removeEventListener('mousemove', handleMouseMove);
             }
