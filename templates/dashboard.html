@@ -193,20 +193,24 @@
 
               console.log(JSON.stringify(lable_info));
               for (var i = 0; i<lable_info.length; i++){
-                  x_s = lable_info[i][0][0];
-                  y_s = lable_info[i][0][1];
-                  x_e = lable_info[i][0][2];
-                  y_e = lable_info[i][0][3];
 
-                  createTransparentDiv(width=Math.abs(x_e-x_s),
-                                        height=Math.abs(y_e-y_s),
-                                        top=y_s + labled_div.getBoundingClientRect().top,
-                                        left=x_s + labled_div.getBoundingClientRect().left,
-                                        name="lable_div");
 
-                  createTextDiv(y_s + labled_div.getBoundingClientRect().top,
-                                x_s + labled_div.getBoundingClientRect().left + 5,
-                                lable_info[i][1]);
+                var scrollLeft = document.documentElement.scrollLeft;
+                var scrollTop = document.documentElement.scrollTop;
+                x_s = lable_info[i][0][0] + scrollLeft;
+                y_s = lable_info[i][0][1] + scrollTop;
+                x_e = lable_info[i][0][2] + scrollLeft;
+                y_e = lable_info[i][0][3] + scrollTop;
+
+                createTransparentDiv(width=Math.abs(x_e-x_s),
+                                    height=Math.abs(y_e-y_s),
+                                    top=y_s + labled_div.getBoundingClientRect().top,
+                                    left=x_s + labled_div.getBoundingClientRect().left,
+                                    name="lable_div");
+
+                createTextDiv(y_s + labled_div.getBoundingClientRect().top,
+                            x_s + labled_div.getBoundingClientRect().left + 5,
+                            lable_info[i][1]);
               }
 
             });
@@ -275,9 +279,15 @@
             }
 
 
+
+
             function handleMouseDown(event) {
-                startX = event.clientX;
-                startY = event.clientY -52;
+                var rect = event.target.getBoundingClientRect();
+                var scrollLeft = document.documentElement.scrollLeft;
+                var scrollTop = document.documentElement.scrollTop;
+                startX = event.clientX + scrollLeft;
+                startY = event.clientY + scrollTop -52;
+
 
                 // Set the initial position and dimensions of the overlay
                 dragOverlay.style.left = startX + 'px';
@@ -292,12 +302,16 @@
                 div.addEventListener('mousemove', handleMouseMove);
             }
 
+
             // Handle mouse move event
             function handleMouseMove(event) {
 
+                var rect = event.target.getBoundingClientRect();
+                var scrollLeft = document.documentElement.scrollLeft;
+                var scrollTop = document.documentElement.scrollTop;
                 // Update the ending coordinates
-                endX = event.clientX;
-                endY = event.clientY - 52;
+                endX = event.clientX + scrollLeft;
+                endY = event.clientY + scrollTop -52;
 
 
                 // Calculate the dimensions of the dragged portion
@@ -324,7 +338,6 @@
                 dragOverlay.style.display = 'none';
                 div.removeEventListener('mousemove', handleMouseMove);
                 }
-
 
 
               lable_pos = [Math.min(startX, endX),
