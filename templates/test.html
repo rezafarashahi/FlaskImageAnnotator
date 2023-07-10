@@ -130,7 +130,7 @@
     }
 
     // Generate transparent div
-    function createTransparentDiv(width, height, top, left, opacity=0.5, name="div") {
+    function createTransparentDiv(width, height, top, left, opacity=0, name="div") {
       var div = document.createElement(`${name}`);
       div.style.position = "absolute";
       div.style.width = width + "px";
@@ -139,6 +139,8 @@
       div.style.left = left + "px";
       div.style.backgroundColor = "rgba(0, 0, 0, " + opacity + ")";
       document.body.appendChild(div);
+      {#div.style.border = "2px dashed #fff";#}
+      div.style.border = "4px dashed green";
       {#return div;#}
     }
     function createTextDiv(top, left, txt){

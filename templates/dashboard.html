@@ -74,52 +74,62 @@
 
         <br>
         <button id="myButton">Next</button>
-        <br>
-        <p id="lable_log1" style="position: absolute; top: 650px; display: none"></p>
-        <p id="lable_log2" style="position:absolute; top: 680px; display: none"></p>
+
 
 
         <div id="formContainer" style="position: absolute; left: 601px; top: 52px">
 
           <select id="selectionForm" size="25">
             <optgroup label="Decay rate">
-              <option value="Class 1">0-Intact tooth</option>
-              <option value="Class 2">1-Fissure staining</option>
-              <option value="Class 3">2-Fissure caries</option>
-              <option value="Class 4">3-Mesial caries</option>
-              <option value="Class 5">4-Distal caries</option>
-              <option value="Class 6">5-Deep caries</option>
+              <option value="0">0-Intact tooth</option>
+              <option value="1">1-Fissure staining</option>
+              <option value="2">2-Fissure caries</option>
+              <option value="3">3-Mesial caries</option>
+              <option value="4">4-Distal caries</option>
+              <option value="5">5-Deep caries</option>
             </optgroup>
             <optgroup label="Tooth type/pos">
-              <option value="Class 7">1-Upper molar</option>
-              <option value="Class 8">2-Upper premolar</option>
-              <option value="Class 9">3-Upper incisor</option>
-              <option value="Class 10">4-Upper canine</option>
-              <option value="Class 11">5-Lower molar</option>
-              <option value="Class 12">6-Lower premolar</option>
-              <option value="Class 13">7-Lower incisor</option>
-              <option value="Class 14">8-Lower canine</option>
+              <option value="6">6-Upper molar</option>
+              <option value="7">7-Upper premolar</option>
+              <option value="8">8-Upper incisor</option>
+              <option value="9">9-Upper canine</option>
+              <option value="10">10-Lower molar</option>
+              <option value="11">11-Lower premolar</option>
+              <option value="12">12-Lower incisor</option>
+              <option value="13">13-Lower canine</option>
             </optgroup>
             </optgroup>
             <optgroup label="Tooth Surface">
-              <option value="Class 15">1-Buccal</option>
-              <option value="Class 16">2-Lingual</option>
-              <option value="Class 17">3-Mesial</option>
-              <option value="Class 18">4-Distal</option>
-              <option value="Class 19">5-Occlusal</option>
+              <option value="14">14-Buccal</option>
+              <option value="15">15-Lingual</option>
+              <option value="16">16-Mesial</option>
+              <option value="17">17-Distal</option>
+              <option value="18">18-Occlusal</option>
             </optgroup>
             </optgroup>
             <optgroup label="Classes of cavity">
-              <option value="Class 20">Class 1</option>
-              <option value="Class 21">Class 2</option>
-              <option value="Class 22">Class 3</option>
-              <option value="Class 23">Class 4</option>
-              <option value="Class 24">Class 5</option>
+              <option value="19">19-Class 1</option>
+              <option value="20">20-Class 2</option>
+              <option value="21">21-Class 3</option>
+              <option value="22">22-Class 4</option>
+              <option value="23">23-Class 5</option>
             </optgroup>
             <!-- Add more option groups as needed -->
-          </select>
-            <br>
-          <button id="submitButton">Submit</button>
+          </select><br>
+          <button id="submitButton" style="font-size: 16px">Apply Lable</button>
+          <button id="resetButton" style="font-size: 16px">Reset</button>
+
+        </div>
+
+
+
+        <div id="lableDiv" style="position:absolute; top: 52px; left: 770px; background: white; width: 600px; height: 600px">
+
+                <img id="pic" draggable="false" src="/static/dataset2/images/{{ img_name }}" alt="" width="600px">
+
+        </div>
+        <div style="position:absolute; top: 52px; left: 770px; display: block; background-color: rgba(0, 0, 0, 0.5);">
+            <h2 style="color: whitesmoke">Labled Pic</h2>
         </div>
 
 </body>
@@ -137,8 +147,8 @@
             const div = document.querySelector("#myDiv");
             const div1 = document.querySelector("#div1");
             const dragOverlay = document.querySelector("#dragOverlay");
-            const lable_log1 = document.getElementById("lable_log1");
-            const lable_log2 = document.getElementById("lable_log2");
+            const labled_div = document.getElementById("lableDiv");
+
 
             div.style.backgroundColor = "grey";
             div.style.width = img.width +'px' ;
@@ -153,18 +163,81 @@
 
             var formContainer = document.getElementById("formContainer");
             var submitButton = document.getElementById("submitButton");
+            var reset_button = document.getElementById("resetButton");
 
             submitButton.addEventListener("click", function() {
               var selectedValue = document.querySelector('#selectionForm').value;
               dragOverlay.style.display = 'None';
-              temp.push(lable_log1.innerHTML)
               console.log("Selected value:", selectedValue);
-              {#console.log(lable_log1.innerHTML)#}
-              {#console.log(lable_log2.innerHTML)#}
-              {#console.log(temp.slice(-1));#}
-              console.log(lable_pos);
+              var tp = [lable_pos, parseInt(selectedValue)];
+              lable_info.push(tp);
+              if (lable_info.length > 1){
+
+                  var info_0 = lable_info.slice(-1);
+                  var info_1 = lable_info.slice(-2);
+
+                  if (info_0[0][0] == info_1[0][0]){
+                      lable_info.pop();
+                  }
+
+              }
+
+              console.log(lable_info);
+              console.log(labled_div.getBoundingClientRect().left);
+
+              for (var i = 0; i<lable_info.length; i++){
+                  x_s = lable_info[i][0][0];
+                  y_s = lable_info[i][0][1];
+                  x_e = lable_info[i][0][2];
+                  y_e = lable_info[i][0][3];
+
+                  createTransparentDiv(width=Math.abs(x_e-x_s),
+                                        height=Math.abs(y_e-y_s),
+                                        top=y_s + labled_div.getBoundingClientRect().top,
+                                        left=x_s + labled_div.getBoundingClientRect().left,
+                                        name="lable_div");
+
+                  createTextDiv(y_s + labled_div.getBoundingClientRect().top,
+                                x_s + labled_div.getBoundingClientRect().left + 5,
+                                lable_info[i][1]);
+              }
 
             });
+
+            reset_button.addEventListener("click", function (){
+                lable_info = [];
+                var divs = document.querySelectorAll("lb_div");
+                divs.forEach(function (div){
+                    div.parentNode.removeChild(div);
+                })
+            });
+
+
+
+
+            function createTransparentDiv(width, height, top, left, opacity=0, name="lb_div") {
+                var div = document.createElement(`${name}`);
+                div.id = `${name}`;
+                div.style.position = "absolute";
+                div.style.width = width + "px";
+                div.style.top = top + "px";
+                div.style.height = height + "px";
+                div.style.left = left + "px";
+                div.style.backgroundColor = "rgba(0, 0, 0, " + opacity + ")";
+                div.style.border = "4px dashed #51ef0c";
+                document.body.appendChild(div);
+            }
+            function createTextDiv(top, left, txt){
+                var divElement = document.createElement("lb_div");
+                var textNode = document.createTextNode(`${txt}`);
+                divElement.style.color = "white";
+                divElement.id = "lb_div";
+                divElement.style.position = "absolute";
+                divElement.style.top = top + "px";
+                divElement.style.left = left + "px";
+                divElement.appendChild(textNode);
+                document.body.appendChild(divElement);
+            }
 
 
             function handleMouseDown(event) {
@@ -218,12 +291,11 @@
                 }
 
 
-              // Print the location of the dragged portion
-              {#console.log('Start: (' + startX + ', ' + startY + ')');#}
-              {#console.log('End: (' + endX + ', ' + endY + ')');#}
-              lable_log1.innerHTML = 'Start: (' + startX + ', ' + startY + ')';
-              lable_log2.innerHTML = 'End: (' + endX + ', ' + endY + ')';
-              lable_pos = [startX, startY, endX, endY];
+
+              lable_pos = [Math.min(startX, endX),
+                           Math.min(startY, endY) ,
+                           Math.max(endX, startX) ,
+                           Math.max(endY, startY) ];
               // Remove the mousemove event listener
               div.removeEventListener('mousemove', handleMouseMove);
             }
