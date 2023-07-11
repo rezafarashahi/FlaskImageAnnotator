@@ -229,6 +229,8 @@
                     "img_name": "{{ img_name }}"
                 };
 
+                console.log(lable_info[0][0])
+
                 fetch(`${window.origin}/get_labled_data`, {
                     method: "POST",
                     credentials: "include",

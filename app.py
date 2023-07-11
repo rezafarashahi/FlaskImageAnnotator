@@ -13,10 +13,13 @@ import os
 import pandas as pd
 import json
 
+with open("config.json", "rb") as conf:
+    config = json.load(conf)
+
 
 app = Flask(__name__)
 app.register_blueprint(routes, url_prefix="/")
-app.config['SECRET_KEY'] = "This is a secret key"
+app.config['SECRET_KEY'] = config['SECRET_KEY']
 
 #Add Database
 
@@ -73,7 +76,6 @@ class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Log In")
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -147,4 +149,4 @@ def internal_server_error(e):
 
 if __name__ == '__main__':
 
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
