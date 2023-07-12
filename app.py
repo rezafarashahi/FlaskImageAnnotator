@@ -104,7 +104,15 @@ def logout():
 def create_entry():
 
     req = request.get_json()
-    print(req)
+    # print(req['lable_data'])
+    ar = []
+    for el in req['lable_data']:
+        ar.append([el[0]]+el[1])
+    print(np.array(ar, dtype=float))
+    np.savetxt('static/dataset2/labels/{}.txt'.format(req["img_name"][:-4]),
+               np.array(ar),
+               delimiter=' ',
+               fmt=['%d', '%.5f', '%.5f', '%.5f', '%.5f'])
 
     res = make_response(jsonify({"message": "JSON received"}), 200)
 
@@ -118,7 +126,8 @@ def home():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    img_list = os.listdir("static/dataset2/images")
+    folder_no = np.random.randint(1,5)
+    img_list = os.listdir("static/dataset/pic_{}".format(folder_no))
     random_img_name = img_list[np.random.randint(0, len(img_list))]
     return render_template("dashboard.html", img_name=random_img_name)
 

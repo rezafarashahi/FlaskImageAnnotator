@@ -224,12 +224,27 @@
             });
 
             submit_all_button.addEventListener("click", function (){
+
+                var lable_loc_yolo_format = []
+                for (var i=0; i < lable_info.length; i++) {
+
+                    const w_image = img.width;
+                    const h_image = img.height;
+                    lable_loc_yolo_format.push([lable_info[i][1],
+                                                        yoloFormat(lable_info[i][0][0],
+                                                        lable_info[i][0][1],
+                                                        lable_info[i][0][2],
+                                                        lable_info[i][0][3])]);
+                };
+
+                console.log(lable_loc_yolo_format[0]);
+
                 var data = {
-                    "lable_data": lable_info,
+                    "lable_data": lable_loc_yolo_format,
                     "img_name": "{{ img_name }}"
                 };
 
-                console.log(lable_info[0][0])
+
 
                 fetch(`${window.origin}/get_labled_data`, {
                     method: "POST",
@@ -254,7 +269,14 @@
             });
 
 
-
+            function yoloFormat(xStart, yStart, xEnd, yEnd){
+                const X0 = (xStart + (xEnd - xStart)/2) / img.width;
+                const Y0 = (yStart + (yEnd - yStart)/2) / img.height;
+                const W = (xEnd - xStart) / img.width;
+                const H = (yEnd - yStart) / img.height;
+                console.log(X0, Y0, W, H);
+                return ([X0, Y0, W, H]);
+            }
 
             function createTransparentDiv(width, height, top, left, opacity=0, name="lb_div") {
                 var div = document.createElement(`${name}`);
