@@ -13,7 +13,8 @@ app.app_context().push()
 
 u = Users(username="sara",
           password_hash=generate_password_hash("sara1", "sha256"))
-db.session.add(u)
-db.session.commit()
+
 
 db.create_all()
+db.session.add(u)
+db.session.commit()
