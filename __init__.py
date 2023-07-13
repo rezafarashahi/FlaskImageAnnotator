@@ -1,5 +1,4 @@
 from flask import Flask, render_template, flash, Blueprint, url_for, request, redirect, jsonify, make_response
-from routes import routes
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from flask_wtf import FlaskForm
