@@ -21,7 +21,6 @@ with open("/etc/config.json", "rb") as conf:
 
 
 app = Flask(__name__)
-app.register_blueprint(routes, url_prefix="/")
 app.config['SECRET_KEY'] = config['SECRET_KEY']
 
 #Add Database
