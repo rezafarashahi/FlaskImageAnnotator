@@ -81,22 +81,22 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Log In")
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = Users.query.filter_by(username=form.username.data).first()
-        if user:
-            if user.verify_password(form.password.data):
-                login_user(user)
-                return redirect(url_for("dashboard"))
-            else:
-                flash("Wrong username/password.")
-        flash("Wrong username/password.")
-    return render_template('login.html', form=form)
-
 # @app.route('/login', methods=['GET', 'POST'])
 # def login():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         user = Users.query.filter_by(username=form.username.data).first()
+#         if user:
+#             if user.verify_password(form.password.data):
+#                 login_user(user)
+#                 return redirect(url_for("dashboard"))
+#             else:
+#                 flash("Wrong username/password.")
+#         flash("Wrong username/password.")
+#     return render_template('login.html', form=form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
 
     print(Users.query.order_by(Users.date_added)[:])
 
