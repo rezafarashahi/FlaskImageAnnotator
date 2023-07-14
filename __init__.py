@@ -151,7 +151,8 @@ def home():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-
+    n_labeled = len(os.listdir("flask_app/static/dataset/labels"))
+    n_total = len(os.listdir("flask_app/static/dataset/images"))
     for i in range(2):
         try:
             rand_no = np.random.randint(0, len(os.listdir(os.path.join(os.getcwd(),
@@ -171,7 +172,11 @@ def dashboard():
             os.rename('flask_app/static/dataset/json/img_ds{}.json'.format(rand_no),
                         'static/dataset/json/img_ds{}_cp.json'.format(rand_no))
 
-    return render_template("dashboard.html", img_name=random_img_name, rand_no=rand_no)
+    return render_template("dashboard.html",
+                           img_name=random_img_name,
+                           rand_no=rand_no,
+                           n_labeled=n_labeled,
+                           n_total=n_total)
 
 @app.route('/test', methods=['GET', 'POST'])
 @login_required
