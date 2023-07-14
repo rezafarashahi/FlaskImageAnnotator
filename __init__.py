@@ -159,7 +159,8 @@ def dashboard():
         except:
             rand_no = np.random.randint(0, len(os.listdir(os.path.join(os.getcwd(),
                                                                        "flask_app/static/dataset/json"))))
-        with open('static/dataset/json/img_ds{}.json'.format(rand_no), 'r') as img:
+        # with open('static/dataset/json/img_ds{}.json'.format(rand_no), 'r') as img:
+        with open('flask_app/static/dataset/json/img_ds{}.json'.format(rand_no), 'r') as img:
             ds_list = json.load(img)
         if ds_list['unlabeled']:
             random_img_name = ds_list['unlabeled'][np.random.randint(0, len(ds_list['unlabeled']))]
@@ -167,7 +168,7 @@ def dashboard():
             print(random_img_name)
             break
         else:
-            os.rename('static/dataset/json/img_ds{}.json'.format(rand_no),
+            os.rename('flask_app/static/dataset/json/img_ds{}.json'.format(rand_no),
                         'static/dataset/json/img_ds{}_cp.json'.format(rand_no))
 
     return render_template("dashboard.html", img_name=random_img_name, rand_no=rand_no)
@@ -182,7 +183,7 @@ def test():
         random_img_name = img_list[np.random.randint(0, len(img_list))]
         random_img_name = "{}.jpg".format(random_img_name[:-4])
         # random_img_name = img_list[3]
-        a = pd.read_csv("static/dataset/labels/{}{}".format(random_img_name[:-3], 'txt'), sep=" ",
+        a = pd.read_csv("flask_app/static/dataset/labels/{}{}".format(random_img_name[:-3], 'txt'), sep=" ",
                         header=None)
         # return render_template("dashboard.html", img_name=random_img_name, a=a)
         print(a)
