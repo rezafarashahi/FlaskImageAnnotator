@@ -153,8 +153,12 @@ def home():
 def dashboard():
 
     for i in range(2):
-
-        rand_no = np.random.randint(0, len(os.listdir(os.path.join(os.getcwd(), "static/dataset/json"))))
+        try:
+            rand_no = np.random.randint(0, len(os.listdir(os.path.join(os.getcwd(),
+                                                                       "static/dataset/json"))))
+        except:
+            rand_no = np.random.randint(0, len(os.listdir(os.path.join(os.getcwd(),
+                                                                       "flask_app/static/dataset/json"))))
         with open('static/dataset/json/img_ds{}.json'.format(rand_no), 'r') as img:
             ds_list = json.load(img)
         if ds_list['unlabeled']:
