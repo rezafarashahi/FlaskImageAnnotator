@@ -164,8 +164,8 @@ def dashboard():
             ds_list = json.load(img)
         if ds_list['unlabeled']:
             random_img_name = ds_list['unlabeled'][np.random.randint(0, len(ds_list['unlabeled']))]
-            print(rand_no)
-            print(random_img_name)
+            # print(rand_no)
+            # print(random_img_name)
             break
         else:
             os.rename('flask_app/static/dataset/json/img_ds{}.json'.format(rand_no),
@@ -186,7 +186,7 @@ def test():
         a = pd.read_csv("flask_app/static/dataset/labels/{}{}".format(random_img_name[:-3], 'txt'), sep=" ",
                         header=None)
         # return render_template("dashboard.html", img_name=random_img_name, a=a)
-        print(a)
+        # print(a)
         return render_template("test.html", a=a.values.tolist(), img=random_img_name)
     else:
         return redirect(url_for("dashboard"))
