@@ -25,7 +25,7 @@ app.config['SECRET_KEY'] = config['SECRET_KEY']
 
 #Add Database
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////home/flask_app/instance/users.db'
 
 #Initialize the database
 
