@@ -133,8 +133,8 @@ def create_entry():
                 json.dump(x, w_f)
 
             res = make_response(jsonify({"message": "JSON received"}), 200)
-            print(req["img_name"])
-            print(req["rand_no"])
+            # print(req["img_name"])?\
+            # print(req["rand_no"])
 
             return res
         else:
