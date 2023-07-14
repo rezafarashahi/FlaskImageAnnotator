@@ -176,12 +176,10 @@
             submitButton.addEventListener("click", function() {
               var selectedValue = document.querySelector('#selectionForm').value;
               dragOverlay.style.display = 'None';
-              console.log("Selected value:", selectedValue);
               var tp = [lable_pos, parseInt(selectedValue)];
               if (tp[1]>-1){
                   lable_info.push(tp);
               };
-              console.log(lable_info);
 
               if (lable_info.length > 1){
 
@@ -195,7 +193,6 @@
               }
 
 
-              console.log(JSON.stringify(lable_info));
               for (var i = 0; i<lable_info.length; i++){
 
 
