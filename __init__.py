@@ -98,7 +98,7 @@ class LoginForm(FlaskForm):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
-    print(Users.query.order_by(Users.date_added)[:])
+    print(Users.query.get(0))
 
 @app.route('/logout', methods=['GET', "POST"])
 @login_required
