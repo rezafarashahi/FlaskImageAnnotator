@@ -177,7 +177,7 @@ def dashboard():
 @login_required
 def test():
 
-    img_list = os.listdir("static\dataset\labels")
+    img_list = os.listdir("flask_app/static/dataset/labels")
 
     if img_list:
         random_img_name = img_list[np.random.randint(0, len(img_list))]
