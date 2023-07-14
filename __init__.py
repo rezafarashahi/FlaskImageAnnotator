@@ -114,21 +114,21 @@ def create_entry():
         ar.append([el[0]]+el[1])
     try:
         if ar:
-            np.savetxt('static/dataset/labels/{}.txt'.format(req["img_name"][:-4]),
+            np.savetxt('flask_app/static/dataset/labels/{}.txt'.format(req["img_name"][:-4]),
                        np.array(ar),
                        delimiter=' ',
                        fmt=['%d', '%.5f', '%.5f', '%.5f', '%.5f'])
-            if 'img_ds{}.json'.format(req["rand_no"]) in os.listdir("static/dataset/json"):
-                with open('static/dataset/json/img_ds{}.json'.format(req["rand_no"]), 'r') as r_f:
+            if 'img_ds{}.json'.format(req["rand_no"]) in os.listdir("flask_app/static/dataset/json"):
+                with open('flask_app/static/dataset/json/img_ds{}.json'.format(req["rand_no"]), 'r') as r_f:
                     x = json.load(r_f)
             else:
-                with open('static/dataset/json/img_ds{}_cp.json'.format(req["rand_no"]), 'r') as r_f:
+                with open('flask_app/static/dataset/json/img_ds{}_cp.json'.format(req["rand_no"]), 'r') as r_f:
                     x = json.load(r_f)
 
             x["labeled"].append([req["img_name"], ar])
             x["unlabeled"].remove(req["img_name"])
 
-            with open('static/dataset/json/img_ds{}.json'.format(req["rand_no"]), 'w') as w_f:
+            with open('flask_app/static/dataset/json/img_ds{}.json'.format(req["rand_no"]), 'w') as w_f:
 
                 json.dump(x, w_f)
 
