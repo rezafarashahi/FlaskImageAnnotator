@@ -122,8 +122,12 @@
 
         <button id="submitAll" style="font-size: 16px; width: 165px; position: absolute;
            top: 650px; left: 0px">Submit</button>
-        <button href="{{ url_for('dashboard') }}" style="font-size: 16px; width: 165px; position: absolute;
-           top: 650px; left: 0px">Skip</button>
+{#        <button href="{{ url_for('dashboard') }}" style="font-size: 16px; width: 165px; position: absolute;#}
+{#           top: 650px; left: 165px">Skip</button>#}
+
+        <input type=button onClick="location.href='{{ url_for('dashboard') }}'"
+                style="font-size: 16px; width: 165px; position: absolute;
+           top: 650px; left: 165px" value='Skip'>
 
 
 
